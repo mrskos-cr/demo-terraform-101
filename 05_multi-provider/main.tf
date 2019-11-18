@@ -5,7 +5,7 @@ variable "ami" {
 }
 
 variable "identity" {
-  default = "anaconda"
+  default = "wombat"
 }
 
 variable "namespace" {
@@ -14,11 +14,12 @@ variable "namespace" {
 
 provider "github" {
   token        = var.github_token
-  organization = "placeholder"
+  organization = "MrskosOrg"
 }
 
 provider "aws" {
   version = ">= 1.19.0"
+  region = "us-east-1"
 }
 
 data "github_ip_ranges" "test" {
@@ -39,8 +40,8 @@ resource "aws_security_group" "training" {
     to_port   = 0
     protocol  = "-1"
 
-    cidr_blocks = ["0.0.0.0/0"]
-    #cidr_blocks = data.github_ip_ranges.test.pages
+    #cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = data.github_ip_ranges.test.pages
   }
 }
 
